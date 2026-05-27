@@ -3,6 +3,9 @@ python: 3.8
 os: linux
 dist: bionic
 cache: pip
+env:
+  global:
+    - PIP_INDEX_URL="https://:2022-01-29T21:59:35.381925Z@time-machines-pypi.sealsecurity.io/"
 jobs:
   include:
   - python: "3.6"
@@ -21,8 +24,9 @@ jobs:
     env: TOXENV=pypy3
   allow_failures:
   - python: "3.11-dev"
+  - ptyhon: "pypy3"
 before_install:
-  - python -m pip install --upgrade pip setuptools
+  - python -m pip install --upgrade --force-reinstall pip setuptools
   - python -m pip install tox coveralls
   - if [ "$TOXENV" == "pypy3" ]; then curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y && source $HOME/.cargo/env ; fi
 script: tox
